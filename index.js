@@ -25,9 +25,11 @@ app.use(express.json());
 app.use(cors());
 
 router.get('/',require('./controllers/hello-world'));
-// router.get('/notes', getAllNotes);
+// get all notes
 router.get('/notes', require('./controllers/getAllNotes'));
 
+// create a note
+router.post('/create-note',require('./controllers/createNote'));
 app.use(router);
 
 const PORT = process.env.PORT || 3000;

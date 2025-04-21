@@ -1,17 +1,23 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
+const fs = require('fs');
 
 const pool = mysql.createPool({
-    host        : process.env.LOCALHOST_DB_HOST,
-    user        : process.env.LOCALHOST_DB_USER,
-    password    : process.env.LOCALHOST_DB_PASSWORD,
-    database    : process.env.LOCALHOST_DB_NAME
+    host        : process.env.PRODUCTION_DB_HOST,
+    user        : process.env.PRODUCTION_DB_USER,
+    password    : process.env.PRODUCTION_DB_PASSWORD,
+    database    : process.env.PRODUCTION_DB_NAME,
+    port        : process.env.PRODUCTION_DB_PORT,
+    ssl: {
+        ca: fs.readFileSync(process.env.RENDER_DB_SSL_CERT_PATH),
+        rejectUnauthorized: true
+    }
 });
 
 const testConnection = async() => {
     try {
         const connection = await pool.getConnection();
-        console.log('Connected to locahost notesy_db!!!');
+        console.log('Connected to production db!!!');
         connection.release();
     } catch (err) {
         console.log('connection failed :- ', err);
