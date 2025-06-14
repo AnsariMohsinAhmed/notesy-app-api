@@ -1,7 +1,13 @@
-const controller = (req, res) => {
-    console.log('req.body :- ', req.body);
+const { createNote } = require("../service/dbData");
+
+const controller = async (req, res) => {
+    const note = req.body.note;
+
     try {
-        res.status(200).json({ message: 'create note api called!' });
+        const result = await createNote(note);
+        if (result) {
+            res.status(200).json({ id: result, note: note, message: 'Note created' });
+        }
     } catch (err) {
         console.log('error creating a note :- ', err);
         res.status(500).json({ message: err });

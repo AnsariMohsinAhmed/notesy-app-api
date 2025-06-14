@@ -1,6 +1,8 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 const fs = require('fs');
+const path = require('path');
+const sslCert = path.resolve(process.env.PRODUCTION_DB_SSL_CERT_PATH);
 
 const pool = mysql.createPool({
     host        : process.env.PRODUCTION_DB_HOST,
@@ -9,7 +11,7 @@ const pool = mysql.createPool({
     database    : process.env.PRODUCTION_DB_NAME,
     port        : process.env.PRODUCTION_DB_PORT,
     ssl: {
-        ca: fs.readFileSync(process.env.RENDER_DB_SSL_CERT_PATH),
+        ca: fs.readFileSync(sslCert), // for deployed connection logic
         rejectUnauthorized: true
     }
 });
