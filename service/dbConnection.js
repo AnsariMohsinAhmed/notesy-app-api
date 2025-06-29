@@ -2,7 +2,7 @@ require('dotenv').config();
 const mysql = require('mysql2/promise');
 const fs = require('fs');
 const path = require('path');
-const sslCert = path.resolve(process.env.RENDER_DB_SSL_CERT_PATH);
+const sslCert = path.resolve(process.env.PRODUCTION_DB_SSL_CERT_PATH);
 
 const pool = mysql.createPool({
     host        : process.env.PRODUCTION_DB_HOST,
